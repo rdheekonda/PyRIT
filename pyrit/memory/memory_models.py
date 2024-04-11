@@ -3,6 +3,7 @@
 
 import hashlib
 import uuid
+import json
 
 from datetime import datetime
 from typing import Dict, Literal
@@ -120,7 +121,8 @@ class PromptMemoryEntry(Base):  # type: ignore
     def is_sequence_set(self) -> bool:
         return self.sequence != -1
 
-    def _create_sha256(self, text: str) -> str:
+    def _create_sha256(self, text: str | list) -> str:
+        text = json.dumps(text)
         input_bytes = text.encode("utf-8")
         hash_object = hashlib.sha256(input_bytes)
         return hash_object.hexdigest()

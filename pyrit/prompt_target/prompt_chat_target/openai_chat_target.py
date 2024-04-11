@@ -47,7 +47,7 @@ class OpenAIChatInterface(PromptChatTarget):
     def send_prompt(
         self,
         *,
-        normalized_prompt: str,
+        normalized_prompt: str | list,
         conversation_id: str,
         normalizer_id: str,
     ) -> str:
@@ -207,7 +207,7 @@ class OpenAIChatInterface(PromptChatTarget):
         )
         return self.parse_chat_completion(response)
 
-    def _prepare_message(self, normalized_prompt: str, conversation_id: str, normalizer_id: str):
+    def _prepare_message(self, normalized_prompt: str | list, conversation_id: str, normalizer_id: str):
         messages = self._memory.get_chat_messages_with_conversation_id(conversation_id=conversation_id)
         msg = ChatMessage(role="user", content=normalized_prompt)
         messages.append(msg)
